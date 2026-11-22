@@ -6,6 +6,7 @@ import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+VERSION = "0.1.0"
 MAX_FILE_BYTES = 16 * 1024 * 1024
 FIELDS = ("nominal", "lifetime", "restock", "min", "quantmin", "quantmax", "cost")
 INTEGER = re.compile(r"[+-]?[0-9]{1,20}")
@@ -21,7 +22,8 @@ def validate(path):
         text = data.decode("utf-8-sig")
         if re.search(r"<!DOCTYPE\b", text, re.IGNORECASE):
             return ["DOCTYPE declarations are unsupported."], []
-        root = ET.fromstring(text)
+        # Input is bounded, decoded as UTF-8, and checked for DTDs above.
+        root = ET.fromstring(text)  # noqa: S314
     except (OSError, UnicodeError, ET.ParseError) as exc:
         return [str(exc)], []
 
@@ -74,6 +76,7 @@ def validate(path):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--version", action="version", version=f"%(prog)s {VERSION}")
     parser.add_argument("files", type=Path, nargs="+", help="DayZ types.xml files")
     args = parser.parse_args(argv)
     failed = False
