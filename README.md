@@ -1,5 +1,7 @@
 # PTX DayZ Config Validator
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/17013/badge)](https://www.bestpractices.dev/projects/17013)
+
 A command-line tool from PTX Community for checking DayZ Central Economy `types.xml` files before deploying them to a server. It runs locally and leaves the input files intact.
 
 ## Quick start
